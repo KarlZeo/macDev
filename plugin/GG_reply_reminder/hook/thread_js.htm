@@ -1,0 +1,12 @@
+<script>
+	//Gingerbbs 回复提醒
+	window.onload = function(){
+		var url = window.location.href;
+		if(/#/.test(url)){
+			url = url.split('#');
+			id = url[1];
+			var height = $("a[pid='"+id+"']").offset().top;
+			$('html body').scrollTop(height);
+		}
+	}
+</script>

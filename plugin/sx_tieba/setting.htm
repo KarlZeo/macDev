@@ -1,0 +1,185 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+	<div class="col-lg-10 offset-lg-1">
+	
+		<div class="btn-group m-b-1" role="group">
+			<?php
+			  echo admin_tab_active(array(
+				 	'set'=>array('url'=>url('plugin-setting-sx_tieba-set'), 'text'=>lang('admin_setting_sxtieba_set')) //,
+				 	//'cutword'=>array('url'=>url('plugin-setting-sx_tieba-cutword'), 'text'=>lang('admin_setting_sxtieba_avatar'))
+				 ), $action);
+				?>
+		</div>
+		
+		<div class="card">
+			<div class="card-block">
+				<form action="<?php echo url("plugin-setting-sx_tieba");?>" method="post" id="form">
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label">自定义项目：</label>
+						<div class="col-sm-10">
+							<?php echo $input['type']; ?>
+						</div>
+					</div>
+					<div class="form-group row" id="fulltext">
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">缩略图风格设置：</label>
+							<div class="col-sm-10">
+								<?php echo $input['method']; ?>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">缩略图尺寸：     <p class="text-grey text-small">依据上一选项决定这两个数值那个有效</p></label>
+							<div class="col-sm-3">
+								<label class="form-control-label">高度：px</label>
+									<?php echo $input['avatar_height']; ?>
+							</div>
+							<div class="col-sm-3">
+								<label class="form-control-label">宽度：px</label>
+									<?php echo $input['avatar_width']; ?>
+							</div>
+							<div class="col-sm-3">
+									<label class="form-control-label">品质：(100最好，默认70)</label>
+									<?php echo $input['avatar_quality']; ?>							
+							</div>	
+						</div>						
+						<label class="col-sm-2 form-control-label">不要显示缩略图的版块：</label>
+						<p class="text-danger">写上不显示缩略图的版块的fid,英文逗号分隔</p>
+						<div class="col-sm-10" style="display: ;">
+							<?php echo $input['cutword_url']; ?>
+							<p class="text-grey text-small"></p>
+						</div>
+					</div>
+					<div id="sphinx">
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">导航栏Logo：</label>
+							<div class="col-sm-10">
+								<?php echo $input['nav_logo_url']; ?>
+								<p class="text-grey text-small">可以相对路径也可以绝对路径，默认：view/img/logo.png</p>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">导航栏背景色：#</label>
+							<div class="col-sm-10">
+								<?php echo $input['nav_bgcolor']; ?>
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">导航栏高度：     <p class="text-grey text-small">这两个数值都是相对数值,单位rem,只变更导航栏高度可能会导致下面内容被遮挡。So...</p></label>
+							<div class="col-sm-4">
+								<label class="form-control-label">导航栏上下高度：</label>
+									<?php echo $input['nav_height']; ?>
+							</div>
+							<div class="col-sm-4">
+								<label class="form-control-label">Body距离顶部：</label>
+									<?php echo $input['body_top']; ?>
+							</div>							
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">导航栏文字：</label>
+							<div class="col-sm-4">
+								<label class="form-control-label">文字大小：rem</label>
+									<?php echo $input['nav_fontsize']; ?>
+							</div>
+							<div class="col-sm-4">
+								<label class="form-control-label">文字颜色：#</label>
+									<?php echo $input['nav_fontcolor']; ?>
+							</div>								
+						</div>
+					</div>
+					<div class="form-group row" id="site_url">
+
+					</div>
+					
+					<div class="form-group row" id="range">
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">缩略图功能开关：</label>
+							<div class="col-sm-10">
+								<?php echo $input['range']; ?>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"></label>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+							<a role="button" class="btn btn-secondary btn-block m-t-1" href="javascript:history.back();"><?php echo lang('back');?></a>
+						</div>
+					</div>
+				</form>
+
+					<div class="form-group row">
+						<div class="col-sm-2">
+								<form id="clr" method="post" action="../plugin/sx_tieba/lib/clr.php">
+								<input class="btn btn-danger" type="submit" value="清除缓存" href="#">
+								</form>
+						</div>
+						<div class="col-sm-10" style="margin-top: 0.5rem;">
+						<span class="text-danger">  如果缩略图风格有变化，请先点这里清除缓存</span>
+						</div>
+					</div>								
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+
+var jform = $("#form");
+var jsubmit = $("#submit");
+var referer = '<?php echo http_referer();?>';
+jform.on('submit', function(){
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message);
+			jsubmit.text(message).delay(2000).button('reset').location(referer);
+			return;
+		} else {
+			$.alert(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+
+function search_type_radio_check(v) {
+	var jfulltext = $('#fulltext');
+	var jsphinx = $('#sphinx');
+	var jsite_url = $('#site_url');
+	var jrange = $('#range');
+	if(v == 'fulltext') {
+		jfulltext.show();
+		jsphinx.hide();
+		jsite_url.hide();
+		jrange.show();
+	} else if(v == 'like') {
+		jfulltext.hide();
+		jsphinx.hide();
+		jsite_url.hide();
+		jrange.show();
+	} else if(v == 'sphinx') {
+		jfulltext.hide();
+		jsphinx.show();
+		jsite_url.hide();
+		jrange.hide();
+	} else if(v == 'site_url') {
+		jfulltext.hide();
+		jsphinx.hide();
+		jsite_url.show();
+		jrange.hide();
+	}
+}
+jform.find('input[name="type"]').on('click', function() {
+	var v = $(this).val();
+	search_type_radio_check(v);
+});
+search_type_radio_check(jform.find('input[name="type"]').checked());
+</script>

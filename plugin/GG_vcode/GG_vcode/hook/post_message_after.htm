@@ -1,0 +1,9 @@
+				<?php $GG_vcode_setting = kv_get('GG_vcode'); ?>
+				<?php if(($route=='thread' && $GG_vcode_setting['thread']==1) || ($route=='post' && $GG_vcode_setting['post']==1)){ ?>
+				<p class="input-group">
+					<span class="input-group-addon" style="padding:0;cursor:pointer;">
+						<img src="plugin/GG_vcode/model/vcode.php" onclick="this.src='plugin/GG_vcode/model/vcode.php'">
+					</span>
+					<input type="text" class="form-control" placeholder="验证码" name="vcode" id="vcode">
+				</p>
+				<?php } ?>

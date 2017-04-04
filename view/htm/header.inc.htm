@@ -1,0 +1,56 @@
+<?php $conf = G('conf');?>
+<?php $header = G('header');?>
+<?php $user = G('user');?>
+<?php $uid = G('uid');?>
+<?php $gid = G('gid');?>
+<?php $fid = G('fid');?>
+<?php $tid = G('tid');?>
+<?php $pid = G('pid');?>
+<?php $route = G('route');?>
+<?php $forumlist_show = G('forumlist_show');?>
+<?php $static_version = $conf['static_version'];?>
+<!DOCTYPE html>
+<html lang="<?php echo $conf['lang'];?>">
+<head>
+	
+	<?php echo defined('BASE_HREF') ? '<base href="'.BASE_HREF.'" />' : '' ;?>
+	
+	<!--{hook header_mete_before.htm}-->
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="XiunoBBS 4.0" />
+	<meta name="keywords" content="<?php echo $header['keywords'];?>" />
+	<meta name="description" content="<?php echo $header['description'];?>" />
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+	<title><?php echo $header['title'];?></title>
+	
+	<link rel="shortcut icon" href="<?php echo $conf['view_url'];?>img/favicon.ico" />
+	<link rel="icon" sizes="32x32" href="<?php echo $conf['view_url'];?>img/favicon.ico">
+	<link rel="Bookmark" href="<?php echo $conf['view_url'];?>img/favicon.ico" />
+	<?php if(DEBUG) { ?>
+	<link rel="stylesheet" href="<?php echo $conf['view_url'];?>css/bootstrap.css<?php echo $static_version;?>">
+	<?php } else { ?>
+	<link rel="stylesheet" href="<?php echo $conf['view_url'];?>css/bootstrap.min.css<?php echo $static_version;?>">
+	<?php } ?>
+	
+	<!--{hook header_link_after.htm}-->
+	
+</head>
+
+<body>
+
+<!--{hook header_body_start.htm}-->
+
+<div id="wrapper">
+	
+	<!--{hook header_wrapper_start.htm}-->
+	
+	<?php include _include(APP_PATH.'view/htm/header_nav.inc.htm');?>
+	
+	<div id="body" class="container">
+	
+	<!--{hook body_start.htm}-->
+	

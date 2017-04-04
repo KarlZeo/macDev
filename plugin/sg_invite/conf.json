@@ -1,0 +1,10 @@
+{
+    "name": "邀请码注册",
+    "brief": "通过邀请码来注册账号。插件为查鸽信息网制作，网址：http://cha.sgahz.net/",
+    "version": "1.2",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

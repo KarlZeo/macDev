@@ -1,0 +1,64 @@
+<!--{hook thread_list_inc_start.htm}-->
+<?php if($threadlist) {
+	foreach($threadlist as $_thread) { ?>
+    <article class="excerpt<?php //if (!isset($_thread['cover'])) {//echo ' excerpt-text';//}?>">
+    <?php if (isset($_thread['cover'])) { ?>
+	<a class="focus" href="<?php echo url("thread-$_thread[tid]");?>">
+        <img class="thumb" src="<?php 
+        //echo $_thread['cover'];
+        $url = $_thread['cover'];
+        $result = substr($url,-4);
+        switch ($result) {
+            case ".png" :
+                echo $url;
+                break;
+            case ".jpg" :
+                echo $url;
+			    break;
+		    case "jpeg" :
+			    echo $url;
+			    break;
+		    case ".gif" :
+			    echo $url;
+			    break;
+            default :
+                echo "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";
+        }
+        if (!isset($_thread['cover'])) {
+		//echo "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png";
+	    }
+        ?>" style="display: inline;">
+    </a>
+    <?php } else {?>
+    <a class="focus" href="<?php echo url("thread-$_thread[tid]");?>">
+		<img class="thumb" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" style="display: inline;">
+    </a>
+    <?php }?>
+	<header>
+		<!--{hook thread_list_inc_subject_forum_before.htm}-->
+		<?php if(!$fid) { ?>
+		<a class="cat" href="<?php echo url("forum-$_thread[fid]");?>"><?php echo $_thread['forumname'];?><i></i></a>
+		<?php } ?>
+		<h2>
+			<a href="<?php echo url("thread-$_thread[tid]");?>" title="<?php echo $_thread['subject'];?>"><?php echo $_thread['subject'];?></a>
+		</h2>
+	</header>
+	<p class="meta">
+		<time>
+			<i class="fa fa-clock-o"></i><?php echo $_thread['create_date_fmt'];?></time>
+		<span class="author">
+			<a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1">
+<i class="fa fa-user"></i><?php echo $_thread['username'];?></a></span>
+<!--{hook thread_list_inc_view_before.htm}-->
+		<span class="pv">
+			<i class="fa fa-eye"></i>阅读(<?php echo $_thread['views'];?>)</span>
+		<a class="pc" href="<?php echo url("thread-$_thread[tid]");?>#comments">
+			<i class="fa fa-comments-o"></i>评论(<?php echo $_thread['posts'];?>)</a>
+<!--{hook thread_list_inc_posts_after.htm}-->
+<?php if(forum_access_mod($_thread['fid'], $gid, 'allowtop')) { ?>
+<input type="checkbox" name="modtid" value="<?php echo $_thread['tid']; ?>" />
+<?php } ?>
+	</p>
+	<p class="note"><?php if(isset($_thread['summary'])) { echo $_thread['summary'];}?></p></article>
+<?php }} ?>
+<!--{hook thread_list_inc_end.htm}-->

@@ -1,0 +1,99 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="card">
+			<div class="card-block">
+				<form action="<?php echo url('plugin-setting-sg_invite');?>" method="post" id="formcreate">
+					<h4 class="card-title">邀请码生成</h4>
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td width="200"><input type="text" class="form-control" name="creatNum" placeholder="生成数量" /></td>
+									<td><button type="submit" class="btn btn-primary" id="submit" data-loading-text="正在生成..." style="width: 10rem;">生成邀请码</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="card">
+			<div class="card-block">
+					<h4 class="card-title">邀请码列表</h4>
+					<div class="table-responsive create">
+						<table class="table">
+							<thead>
+								<tr align="center">
+									<th>邀请码</th>
+									<th>生成时间</th>
+									<th>使用人</th>
+									<th>使用时间</th>
+									<th><input type="checkbox" data-target='input[name="delete"]' class="checkall m-t-sm  m-r-sm" value="" aria-label="全选" />删除</th>
+								</tr>
+							<thead>
+							<tbody id="invitelist">
+								<?php foreach($invitelist as $arr) { ?>
+								<?php $rowid = $arr['id'];?>
+								<tr rowid="<?php echo $rowid; ?>">
+									<td><?php echo $arr['inv']; ?></td>
+									<td><?php echo date("Y-m-d H:i:s",$arr['ctime']); ?></td>
+									<td><?php if(!$arr['user']) { echo '未使用'; } else { echo $arr['user'];} ?></td>
+									<td><?php if(!$arr['stime']) { echo '未使用'; } else { echo date("Y-m-d H:i:s",$arr['stime']);} ?></td>
+									<td><input type="checkbox" name="delete" /></td>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
+			<hr class="m-t-0" />
+			<p><button class="btn btn-sm m-l-1" id="confirm"><?php echo lang('delete');?></button></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+<script>
+var jform = $('#formcreate');
+var jsubmit = $('#submit');
+var juserlist = $('#invitelist');
+var jconfirm = $("#confirm");
+jform.on('submit', function() {
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message).delay(1000).location(xn.url('plugin-setting-sg_invite'));
+		} else {
+			alert(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+// 删除
+jconfirm.on('click', function(){
+	var jchecked = juserlist.find('input[name="delete"]').filter(function(){ return this.checked; });
+	if(jchecked.length < 1) return alert("请勾选您要删除的邀请码");
+	if(!window.confirm("确定删除邀请码？")) return false;
+	jchecked.each(function() {
+		jtr = $(this).parents('tr');
+		var rowid = jtr.attr('rowid');
+
+		$.xpost(xn.url('plugin-setting-sg_invite'), {rowid:rowid}, function(code, message) {
+			if(code != 0) return $.alert(message);
+			jtr.remove();
+		});
+	});
+});
+$('#nav_pc li.plugin, #nav_mobile li.plugin').tab('show');
+
+</script>

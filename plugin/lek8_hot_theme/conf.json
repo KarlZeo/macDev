@@ -1,0 +1,11 @@
+{
+    "name": "乐客热门主题插件",
+    "brief": "首页右侧，展示本周被点击最多的5条主题。v1.1版更新：对数据库查询结果，缓存3600秒，修正了取7天时间戳的BUG。",
+    "version": "1.1",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

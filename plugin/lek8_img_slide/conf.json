@@ -1,0 +1,11 @@
+{
+    "name": "乐客图片轮播插件",
+    "brief": "首页右侧，轮播5个最新帖子的最后一张图片。",
+    "version": "1.0",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 0,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

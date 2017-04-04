@@ -1,0 +1,21 @@
+<?php include _include(APP_PATH.'plugin/huux_os_set/model/huux_os_set.func.php');?>
+<li class="nav-item dabai_plugin">
+	<div class="dropdown">
+			<a class="nav-link nav-more" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="#"><i class="icon-th-large"></i>  大白插件</a>
+			<ul class="dropdown-menu dabai" aria-labelledby="dropdownMenu2">
+				<?php
+				plugin_item();
+				?>
+			</ul>
+	</div>
+</li>
+<style type="text/css">
+	.dabai{ left:-20px; }
+	.dabai li{ position: relative; padding-right:50px;  height: 25px; line-height: 25px;}
+	.dabai li:hover{ background: #6D7071 }
+	.dabai li a.dropdown-item{ height: 25px; line-height: 25px; padding: 0px 0px 0px 10px; float: left;}
+	.dabai li a em{ font-style: normal;font-size: 12px; margin-right: 5px; }
+	.dabai li a.dropdown-item:hover{ background: none; }
+	.dabai li a.abs{ height: 25px; line-height: 25px; background: none; position: absolute; right: 0; width: 100px; top:0; text-decoration:none;color:#25B0C7; font-size:0.5rem;width: 50px;text-align: center;}
+	.dabai li a.abs:hover{color:#fff;}
+</style>

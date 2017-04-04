@@ -1,0 +1,22 @@
+<!-- 这里随机显示一条全站置顶主题 -->
+<?php
+$_thread = array();
+if($threadlist){
+    if($toplist){
+        $key = array_rand($toplist);
+        $_thread = $toplist[$key];
+        unset($toplist[$key]);
+    }
+}
+if($_thread){
+?>
+<div class="card card-block">
+    <h6 class="card-title">
+        <a class="text-success" href="<?php echo url("forum-$_thread[fid]");?>">【<?php echo $_thread['forumname'];?>】</a>
+        <a href="<?php echo url("thread-$_thread[tid]");?>" title="<?php echo $_thread['subject'];?>"><?php echo $_thread['subject'];?></a>
+    </h6>
+    <p class="note" style="height: 74px;overflow: hidden;margin-bottom: 0;"><?php echo $_thread['summary'];?></p>
+</div>
+<?php
+}
+?>

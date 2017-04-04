@@ -1,0 +1,10 @@
+{
+    "name": "【Gingerbbs】 - 回复提醒",
+    "brief": "如果引用的楼层，则层主会有提醒。如果直接回复，则楼主有提醒。",
+    "version": "1.0",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

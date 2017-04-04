@@ -1,0 +1,11 @@
+{
+    "name": "大白自定义HTML+CSS+JS",
+    "brief": "首页、板块页、主题页等页面的自定义html、CSS、JS。<br/><span class='small text-success'>v1.6版本说明：优化UI，增加载入演示代码。</span>",
+    "version": "1.6",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

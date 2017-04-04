@@ -1,0 +1,11 @@
+<?php
+$form_summary = '';
+if(($route == 'thread' && $action == 'create') ||($route == 'post' && $action == 'update')) {
+if($action=='update'){
+    $form_summary = $thread['summary'];
+}
+?>
+<div class="form-group">
+    <textarea class="form-control" placeholder="摘要" name="summary" id="summary" style="height: 100px;"><?php echo $form_summary;?></textarea>
+</div>
+<?php } ?>

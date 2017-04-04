@@ -1,0 +1,31 @@
+
+ <script>
+ $(document).ready(function(){
+	var slide = $(".slideShow"),
+ 	ul = slide.find("ul"),
+	nav = slide.find(".nav span"),
+ 	oneWidth = ul.find("li").eq(0).height()+5;
+	timer = null;
+	iNow = 0;
+	
+	nav.on("click",function(){
+	var me = $(this),
+		index = me.index();
+		nav.removeClass("active");
+		me.addClass("active");
+		ul.animate({"top": -oneWidth * index});
+ 	});
+	
+	
+	timer = setInterval(function(){
+	
+		iNow++;
+		
+		if(iNow > nav.length-1){
+		iNow = 0;
+	}
+	nav.eq(iNow).trigger("click");
+	},4000);
+ });
+
+</script>

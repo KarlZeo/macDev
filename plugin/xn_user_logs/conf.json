@@ -1,0 +1,11 @@
+{
+    "name": "用户登录日志",
+    "brief": "记录用户登录日志",
+    "version": "1.12",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

@@ -1,0 +1,143 @@
+<?php include './view/htm/header.inc.htm'; ?>
+
+<div class="row">
+	<div class="col-lg-10 col-lg-offset-1">
+		<div class="card">
+			<div class="card-block">
+				<form action="<?php echo url('plugin-setting-GG_vcode');?>" method="post" id="form">
+					<h4 class="card-title">Gingerbbs验证码设置</h4>
+					<div class="table-responsive arrlist">
+						<table class="table" style="min-width: 800px">
+							<thead>
+								<tr align="center">
+									<th>名称</th>
+									<th>操作</th>
+								</tr>
+							<thead>
+							<tbody>
+								<tr>
+									<td>注册</td>
+									<td>
+										<select class="form-control" name="register">
+											<option value="0">是否开启</option>
+											<option value="1" <?php if($setting['register']==1){echo 'selected';}?>>是</option>
+											<option value="0" <?php if($setting['register']==0){echo 'selected';}?>>否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>登陆</td>
+									<td>
+										<select class="form-control" name="login">
+											<option value="0">是否开启</option>
+											<option value="1" <?php if($setting['login']==1){echo 'selected';}?>>是</option>
+											<option value="0" <?php if($setting['login']==0){echo 'selected';}?>>否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>发帖</td>
+									<td>
+										<select class="form-control" name="thread">
+											<option value="0">是否开启</option>
+											<option value="1" <?php if($setting['thread']==1){echo 'selected';}?>>是</option>
+											<option value="0" <?php if($setting['thread']==0){echo 'selected';}?>>否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>回帖</td>
+									<td>
+										<select class="form-control" name="post">
+											<option value="0">是否开启</option>
+											<option value="1" <?php if($setting['post']==1){echo 'selected';}?>>是</option>
+											<option value="0" <?php if($setting['post']==0){echo 'selected';}?>>否</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>验证码样式</td>
+									<td>
+										<select class="form-control" name="type">
+											<option value="1">样式1</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>验证码长度</td>
+									<td>
+										<input class="form-control" name="len" value="<?php echo $setting['len'];?>" type="text">
+									</td>
+								</tr>
+								<tr>
+									<td>图片长度</td>
+									<td>
+										<input class="form-control" name="width" value="<?php echo $setting['width'];?>" type="text">
+									</td>
+								</tr>
+								<tr>
+									<td>图片高度</td>
+									<td>
+										<input class="form-control" name="height" value="<?php echo $setting['height'];?>" type="text">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p class="text-center">
+						<button type="submit" class="btn btn-primary" id="submit" data-loading-text="<?php echo lang('submiting');?>..." style="width: 10rem;"><?php echo lang('confirm');?></button>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include './view/htm/footer.inc.htm'; ?>
+
+<script>
+
+if(!debug) $.alert('<?php echo lang('forum_edit_tip');?>');
+
+var jform = $("#form");
+var jsubmit = $("#submit");
+
+jform.on('submit', function(){
+	jform.reset();
+	var postdata = jform.serialize();
+	jsubmit.button('loading');
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message);
+			jsubmit.text(message).delay(3000).location();
+			return;
+		} else {
+			console.log(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+
+
+// 增加
+var jarrlist = $('.arrlist');
+var jadd = $('a.row_add');
+jadd.on('click', function() {
+	var jclone = jarrlist.find('tr').last().clone();
+	jclone.insertAfter(jarrlist.find('tr').last());
+	jclone.find('input').val('');
+	return false;
+});
+
+
+//删除
+var jdel = $('.row_delete');
+jdel.on('click',function(){
+	var jtr = $(this).parents('tr');
+	jtr.remove();
+});
+
+$('#nav_pc li.plugin, #nav_mobile li.plugin').tab('show');
+
+</script>

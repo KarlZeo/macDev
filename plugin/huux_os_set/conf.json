@@ -1,0 +1,11 @@
+{
+    "name": "大白增强设置",
+    "brief": "增强系统设置项，默认图片修改，一键清除缓存，查看附件列表等<br/><span class='small text-success'>v1.1版本说明：部分代码重写，做了一些细节优化。</span>",
+    "version": "1.1",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

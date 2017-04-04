@@ -1,0 +1,1 @@
+db_insert('user_logs',array('uid'=>$uid, 'login_ip'=>$longip, 'login_date' =>$time , 'ua'=>$useragent));

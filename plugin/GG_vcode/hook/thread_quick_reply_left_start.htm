@@ -1,0 +1,7 @@
+				<?php $GG_vcode_setting = kv_get('GG_vcode'); ?>
+				<?php if($GG_vcode_setting['post']==1){ ?>
+				<span style="padding:0;cursor:pointer;display:inline-block;float:left;">
+					<img src="plugin/GG_vcode/model/vcode.php" onclick="this.src='plugin/GG_vcode/model/vcode.php'">
+				</span>
+				<input type="text" class="form-control" placeholder="验证码" name="vcode" id="vcode" style="display:inline-block;width:50%;"><br>
+				<?php } ?>

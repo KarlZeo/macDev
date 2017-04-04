@@ -1,0 +1,10 @@
+{
+    "name": "Xiuno4缩略图列表插件lite",
+    "brief": "Xiuno4缩略图列表插件lite，作者：imyoy.com <h6>V1.37更新说明</h6><ol><li>在1.33版基础上去掉导航栏自定义选项，保留官方导航</li><li>修正搜索列表错误显示</li><li>增加版块关闭缩略功能设置选项</li><li>修复搜索插件兼容</li><li>不能和原版同时使用</li></ol>",
+    "version": "lite1.37",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 0,
+    "hooks_rank": [],
+    "dependencies": []
+}

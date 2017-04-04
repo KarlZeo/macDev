@@ -1,0 +1,46 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="btn-group m-b-1" role="group">
+			<a role="button" class="btn btn-secondary active" href="?user_logs.htm">用户登录日志列表</a>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="table-responsive">
+				<table class="table" style="min-width: 800px">
+					<thead>
+						<tr>
+							<th width="50">ID</th>
+							<th width="150"><?php echo lang('username');?></th>
+							<th width="185">登录时间</th>
+							<th width="155">登录IP</th>
+							<th>登录设备</th>
+						</tr>
+					</thead>
+					<tbody>
+				<?php if($list) foreach($list as &$_log){ ?>
+					<tr>
+						<td><?php echo $_log['id']; ?></td>
+						<td><?php echo $_log['username']; ?></td>
+						<td><?php echo $_log['date']; ?></td>
+						<td><?php echo $_log['ip']; ?></td>
+						<td><?php echo $_log['ua']; ?></td>
+					</tr>
+				<?php } ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+$('#nav_pc li.user, #nav_mobile li.user').tab('show');
+</script>

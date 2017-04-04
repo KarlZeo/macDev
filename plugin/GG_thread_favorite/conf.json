@@ -1,0 +1,10 @@
+{
+    "name": "【Gingerbbs】 - 收藏帖子",
+    "brief": "收藏的帖子可在个人中心处查看。",
+    "version": "1.1",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

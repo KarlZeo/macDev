@@ -1,0 +1,488 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+<style type="text/css">
+#wrapper{ background: #fff}
+.fr{float: right;}
+.fl{float: left;}
+.card{border: 1px solid rgba(0, 0, 0, 0.125);box-shadow: 0px 0px 10px 0px #e2e2e2; margin-top:0px;}
+.btn-default {color: #333;background-color: #fff;border-color: #ccc;}
+.btn-default:hover {color: #333;background-color: #e6e6e6;border-color: #adadad;}
+.card-header .label {display: inline-block;padding: .25em .4em;font-size: 75%;line-height: 1;color: #fff;white-space: nowrap;vertical-align: baseline;border-radius: .25rem;}
+.card-header .label-success {background-color: #5cb85c;}
+/*标题行*/
+.card-title{border-bottom:1px dashed rgb(245, 245, 245); height: 50px;line-height: 30px;}
+.card-title i,.nav-item i{display: inline-block; margin-right: 5px;}
+/*TAB行*/
+#myTab li{ padding: 0; }
+#myTab li.nav-item.pull-right{ float: right; }
+#myTab a{ display: inline-block;text-decoration: none; padding: 0.5rem 1rem 0.5rem 1rem }
+#myTab a:hover{color:#000; background: #F9F9F9}
+#myTab a.active{ background-color:#fff; }
+/*TAB内容*/
+.tab-content{ margin-bottom: 10px;border-bottom-right-radius:5px;border-bottom-left-radius:5px;}
+/*form内容*/
+.form-group { padding: 0.5rem 1rem;border-bottom: 1px dashed rgba(226, 226, 226, 0.46);margin-bottom: 0;}
+.form-group b{ font-weight: normal; }
+.form-group p,.form-group label{ margin-bottom: 0; }
+.form-group p em{ font-style: normal; padding: 0 1rem }
+.form-group label{font-size:0.85rem;}
+.form-group .form-control-label b{font-size: 12px;padding:0px 4px; border:solid 1px #e2e2e2;display:inline-block;color:#333;background: #f2f2f2;border-radius: 2px; font-weight: normal;font-family:courier new, sans-serif; margin: 0px 2px 2px 0px;}
+.form-group .form-control-label b.z-js{background: #f0ad4e;color:#fff;border:none;}
+.form-group .form-control-label b.z-jq{background: #6AB3DE;color:#fff;border:none;}
+.form-group .form-control{box-shadow:0px 1px 5px 0px #e2e2e2 inset;}
+.form-group .form-control:focus { box-shadow:0px 1px 5px 0px #E2F1FF inset;border-color: #9BC9EF;}
+/*form内容-附件列表*/
+#attachpages i{margin-right: 5px;}
+.pagination a{ cursor: pointer; }
+#attachpages { font-size: 12px; }
+#attachpages a{text-decoration: none;}
+#attachpages a:hover{  color: #F44336 }
+/*头像*/
+.img_demo{ max-height: 96px; max-width: 100%; overflow: hidden; }
+.img_demo img{ max-height: 100%;max-width: 100%; }
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+
+			<div class="card">
+				<div class="card-header"> 
+					<div class="row">
+						<div class="col-lg-4"><p class="m-y-xs text-muted fl"><i class="icon-cog m-r-sm"></i>大白增强设置<span class="m-l-xs label label-success">v1.1</span></p></div>
+						<div class="col-lg-8 text-right ">
+						<a class="btn btn-default text-muted m-y-xs m-r-xs btn-sm" target="_blank" href="http://xiuno.huux.com" role="button"><i class="icon-chevron-circle-right m-r-xs"></i>插件官网</a>
+						<a class="btn btn-default text-muted m-y-xs m-r-xs btn-sm" href="<?php echo url("plugin-setting-huux_os_set");?>" role="button"><i class="icon-refresh"></i></a>
+						<a class="btn btn-default text-muted m-y-xs m-r-xs btn-sm" href="<?php echo url("plugin");?>" role="button"><i class="icon-times"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- card-block start -->
+			    <div class="card-block">
+					<!-- tab -->
+					 <ul class="nav nav-tabs" role="tablist" id="myTab">
+					  <li class="nav-item active"><a href="#tab1"  class="nav-link">系统设置</a></li>
+					  <li class="nav-item"><a href="#tab2" class="nav-link">默认图片</a></li>
+					  <li class="nav-item"><a href="#tab3" class="nav-link">一键清理</a></li>
+					  <li class="nav-item"><a href="#tab4" class="nav-link">附件列表</a></li>
+					</ul>
+					<div class="tab-content card-block">
+				        <div class="tab-pane active" id="tab1">
+				 	          <!-- 系统设置 -->
+							  <form action="<?php echo url("plugin-setting-huux_os_set");?>" method="post" id="form">
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label"><?php echo lang('sitename');?>：</label>
+										<div class="col-sm-10">
+											<?php echo $input['sitename'];?>
+										</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label"><?php echo lang('sitebrief');?>：</label>
+									<div class="col-sm-10">
+										<?php echo $input['sitebrief'];?>
+										<p class="m-t-sm text-grey small"><?php echo lang('sitebrief_tips');?> </p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">站点关键词：</label>
+									<div class="col-sm-10">
+										<?php echo $input['site_keywords']; ?>
+										<p class="text-grey small">例如：新网站,网站,keyword,关键词,多少,字数,为好 <em class="text-danger">关键词之间用,隔开</em></p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">附件列表单页显示数量：</label>
+										<div class="col-sm-10">
+											<?php echo $input['attach_pagesize'];?>
+										</div>
+									</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label"><?php echo lang('runlevel');?>：</label>
+									<div class="col-sm-10">
+											<?php echo $input['runlevel'];?>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">站点关闭友好提示：</label>
+									<div class="col-sm-10">
+										<?php echo $input['runlevel_reason']; ?>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label"><?php echo lang('user_create_email_on');?>：</label>
+									<div class="col-sm-10">
+										<?php echo $input['user_create_email_on'];?>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label"><?php echo lang('user_resetpw_on');?>：</label>
+									<div class="col-sm-10">
+										<?php echo $input['user_resetpw_on'];?>
+									</div>
+								</div>
+								<div class="form-group row">
+										<label class="col-sm-2 form-control-label">是否开启伪静态：</label>
+										<div class="col-sm-10" id="rewrite-z">
+											<?php echo $input['url_rewrite_on']; ?>
+											<p class="text-danger small">注：请先设置伪静态（<b class="text-info"><a href="http://bbs.xiuno.com/thread-2.htm" target="_blank"><i class="icon-link"></i>官方伪静态设置教程</a></b>），如果未完成设置，强制开启将导致后台无法访问！</p>
+										</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">是否开启CDN：</label>
+									<div class="col-sm-10">
+										<?php echo $input['cdn_on']; ?>
+										<p class="text-grey small">注：如果前端开启了 CDN 请选择是，否则获取 IP 会不准确</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">后台是否绑定IP：</label>
+									<div class="col-sm-10">
+										<?php echo $input['admin_bind_ip']; ?>
+										<p class="text-grey small">注：默认"是"，可选择"否"用于解决（其他ip设备登录后台提示管理登录令牌失效，请重新登录）问题</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">前端view目录：</label>
+									<div class="col-sm-10">
+										<?php echo $input['view_url']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">view/</em>   ，可以配置单独的 CDN 域名：比如：http://static.domain.com/view/</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">上传文件目录：</label>
+									<div class="col-sm-10">
+										<?php echo $input['upload_url']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">upload/</em>   ，可以配置单独的 CDN 域名：比如：http://upload.domain.com/upload/</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">在线更新频度：</label>
+									<div class="col-sm-10">
+										<?php echo $input['online_update_span']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">120</em>   ，大站设置的长一些</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">在线时间：</label>
+									<div class="col-sm-10">
+										<?php echo $input['online_hold_time']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">3600</em>   ，大站设置的长一些</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">缺省主题排序：</label>
+									<div class="col-sm-10">
+										<?php echo $input['order_default']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">lastpid</em>   ，有最新回复的在前</p>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">主题列表每页主题数：</label>
+									<div class="col-sm-10">
+										<?php echo $input['pagesize']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">20</em>   ,主题列表显示的"主题数"，例如设置为5，那么主题超过5个就分页了，第6个主题就在第二页显示。</p>
+										
+									</div>
+								</div>
+
+						        <div class="form-group row">
+									<label class="col-sm-2 form-control-label">主题页每页回复数：</label>
+									<div class="col-sm-10">
+										<?php echo $input['postlist_pagesize']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">1000</em>   ,主题页下面的"回复数"，例如设置为10，那么回复超过10个就分页了，第11个回复就在第二页显示。</p>
+										
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">自动缩略最大宽度：</label>
+									<div class="col-sm-10">
+										<?php echo $input['upload_image_width']; ?>
+										<p class="text-grey small">注：默认   <em class="text-danger">927</em>   ,上传图片自动缩略的最大宽度。</p>
+										
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">默认logo图片大小：</label>
+									<div class="col-sm-2 m-b-sm">
+									    <div class="input-group">
+								          <div class="input-group-addon">宽</div>
+								          <?php echo $input['logoimg_width'];?>
+								          <div class="input-group-addon">px</div>
+								        </div>
+										
+									</div>
+									<div class="col-sm-2 m-b-sm">
+										<div class="input-group">
+								          <div class="input-group-addon">高</div>
+								         <?php echo $input['logoimg_height'];?>
+								          <div class="input-group-addon">px</div>
+								        </div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label">默认头像图片大小：</label>
+									<div class="col-sm-2 m-b-sm">
+									    <div class="input-group">
+								          <div class="input-group-addon">宽</div>
+								          <?php echo $input['avatarimg_width'];?>
+								          <div class="input-group-addon">px</div>
+								        </div>
+										
+									</div>
+									<div class="col-sm-2 m-b-sm">
+										<div class="input-group">
+								          <div class="input-group-addon">高</div>
+								          <?php echo $input['avatarimg_height'];?>
+								          <div class="input-group-addon">px</div>
+								        </div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 form-control-label"></label>
+									<div class="col-sm-2 m-b-sm">
+										<button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+									</div>
+									<div class="col-sm-2 m-b-sm">
+										<a role="button" class="btn btn-secondary btn-block" href="javascript:history.back();"><?php echo lang('back');?></a>
+									</div>
+						        </div>
+							</form>
+				        </div>
+					    <div class="tab-pane" id="tab3">
+					        <!-- 一键清理 -->
+				            <div class="col-sm-6">
+								<button type="button" class="btn btn-primary btn-lg btn-block" id="clear_tmp" ><?php echo lang('admin_clear_tmp');?>tmp</button>
+								
+							<progress class="m-t-sm progress progress-success" value="0" max="100" id="clear_tmp_progress">0%</progress>
+							
+
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="btn btn-primary btn-lg btn-block" id="clear_cache" ><?php echo lang('admin_clear_cache');?>cache</button>
+								<progress class="m-t-sm progress progress-success" value="0" max="100" id="clear_cache_progress">0%</progress>
+							</div>		
+					    </div>
+			            <div class="tab-pane" id="tab2"> 
+				            <!-- 站点logo -->
+							<div class="col-sm-6">
+							    <h6 class="text-center">默认logo</h6>
+								<p class="text-center img_demo">
+									<img id="logo_img" src="../view/img/logo.png">
+								</p>
+								<p class="text-center m-y-xs text-grey small">
+									<span>默认图片大小：64x64 </span><span class="m-l-xs">图片格式：.png</span>
+								</p>
+								<p class="text-center m-y-xs text-danger small">
+									<span>您设置的图片大小：<?php echo $setting['logoimg_width'].'x'.$setting['logoimg_height']?>(请到系统设置里设置)</span>
+								</p>
+								<p class="text-center">
+									<input type="file" id="logo_upload" accept=".png"  class="upload" style="width: 200px; opacity: 0.7" />
+								</p>
+								<progress class="progress progress-success" value="0" max="100" id="logo_progress">0%</progress>
+							</div>
+							<div class="col-sm-6">
+							    <h6 class="text-center">默认头像</h6>
+								<p class="text-center img_demo">
+									<img id="avatar_img" src="../view/img/avatar.png">
+								</p>
+								<p class="text-center m-y-xs text-grey small">
+									<span>推荐图片大小：96x96 </span><span class="m-l-xs">图片格式：.png</span>
+								</p>
+								<p class="text-center m-y-xs text-danger small">
+									<span>您设置的图片大小：<?php echo $setting['avatarimg_width'].'x'.$setting['avatarimg_height']?>(请到系统设置里设置)</span>
+								</p>
+								<p class="text-center">
+									<input type="file" id="avatar_upload" accept=".png"  class="upload" style="width: 200px; opacity: 0.7" />
+								</p>
+								<progress class="progress progress-success" value="0" max="100" id="avatar_progress">0%</progress>
+							</div>  
+				        </div>
+				        <div class="tab-pane table-responsive" id="tab4"> 
+				        <!-- 附件列表 -->
+							<table class="table">
+						      <thead>
+						        <tr>
+						          <th>序号</th>
+						          <th>文件目录</th>
+						          <th>文件名称</th>
+						          <th>文件类型</th>
+						          <th>文件大小</th>
+						          <th>创建时间</th>
+						        </tr>
+						      </thead>
+						      <tbody id="attachpages">
+
+			                  <?php echo $ajax_list; ?>
+					        </tbody>
+                            </table>
+                            <nav class="text-center"><ul class="pagination pagination-sm"><?php echo $pagination; ?></ul></nav>
+				        </div>
+			        </div>
+			        <!-- tabcontent end -->
+			    </div>
+			    <!-- card-block end -->
+				<div class="card-footer text-right"><p class="m-y-xs text-muted  text-small"><i class="icon-qq m-r-sm"></i>XiunoBBS交流群：474834730</p></div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var jform = $("#form");
+var jsubmit = $("#submit");
+var referer = '<?php echo url("plugin-setting-huux_os_set");?>';
+jform.on('submit', function(){
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	console.log(postdata);
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message.b);
+			jsubmit.text(message.a).delay(1000).button('reset').location(referer);
+			return;
+		} else {
+			$.alert(message.c);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+
+//一键清理tmp
+var clear_tmp = $("#clear_tmp");
+var tmpprogress = $('#clear_tmp_progress');//进度条
+clear_tmp.on('click', function(){
+	//var postdata = "action=clear&clear=tmp";
+	var url = '<?php echo url("plugin-setting-huux_os_set-clearii");?>';
+	tmpprogress.val(0);
+	$.xpost(url, {clear:'tmp'}, function(code, message) {
+		if(code == 0) {
+			$.alert(message.a);
+			clear_tmp.text(message.a).delay(100).button('reset');
+			clear_tmp.removeClass("btn-danger").addClass("btn-success");
+			return;
+		} else {
+			$.alert(message.b);
+			clear_tmp.button('reset');
+		}
+	}, function(percent) {
+			tmpprogress.val(percent);
+	});
+	return false;
+});
+
+//一键清理cache
+var clear_cache = $("#clear_cache");
+var cacheprogress = $('#clear_cache_progress');//进度条
+clear_cache.on('click', function(){
+	//var postdata = "action=clear&clear=cache";
+	var url = '<?php echo url("plugin-setting-huux_os_set-clearii");?>';
+	cacheprogress.val(0);
+	$.xpost(url, {clear:'cache'}, function(code, message) {
+		if(code == 0) {
+			$.alert(message.a);
+			clear_cache.text(message.a).delay(100).button('reset');
+			clear_cache.removeClass("btn-danger").addClass("btn-success");
+			return;
+		} else {
+			$.alert(message.b);
+			clear_cache.button('reset');
+		}
+	}, function(percent) {
+			cacheprogress.val(percent);
+	});
+	return false;
+});
+//站点默认logo
+var jlogo_upload = $('#logo_upload');
+	var j_logo_progress = $('#logo_progress');
+	var j_logo_img = $('#logo_img');
+	var j_logo_img_w = $('#logoimg_width').val();
+	var j_logo_img_h = $('#logoimg_height').val();
+	var j_logo_img2 = $('#nav_pc').find('.logo-sm');
+	
+	jlogo_upload.on('change', function(e) {
+		var files = xn.get_files_from_event(e);
+		j_logo_progress.val(0);
+		xn.upload_file(
+			files[0], 
+			xn.url('plugin-setting-huux_os_set-clip'), 
+			{width: j_logo_img_w, height: j_logo_img_h, filetype: 'png', item:'logo'}, 
+			function(code, message) {
+				if(code == 0) {
+					j_logo_img.attr('src', message.c);
+					j_logo_img2.attr('src', message.c);
+					$.alert(message.a);
+				} else {
+					$.alert(message.b);
+				}
+			}, 
+			function(percent) {
+				j_logo_progress.val(percent);
+			}
+		);
+});
+//站点默认头像
+    var javatar_upload = $('#avatar_upload');
+	var j_avatar_progress = $('#avatar_progress');
+	var j_avatar_img = $('#avatar_img');
+	var j_avatar_img_w = $('#avatarimg_width').val();
+	var j_avatar_img_h = $('#avatarimg_height').val();
+	javatar_upload.on('change', function(e) {
+		var files = xn.get_files_from_event(e);
+		j_avatar_progress.val(0);
+		xn.upload_file(
+			files[0], 
+			xn.url('plugin-setting-huux_os_set-clip'), 
+			{width: j_avatar_img_w, height: j_avatar_img_h, filetype: 'png', item:'avatar'}, 
+			function(code, message) {
+				if(code == 0) {
+					j_avatar_img.attr('src', message.c);
+					$.alert(message.a);
+				} else {
+					$.alert(message.b);
+				}
+			}, 
+			function(percent) {
+				j_avatar_progress.val(percent);
+			}
+		);
+});
+
+//分页ajax
+function page(){
+	var pagelink = $(".page-link"),pagination =$(".pagination"),attachpages = $('#attachpages');
+	pagelink.on('click', function(){
+		var result = $(this).attr('data-title');
+		var url = '<?php echo url("plugin-setting-huux_os_set-page");?>';
+		$.xpost(url, {l:result}, function(code, message) {
+			if(code == 0) {
+				pagination.html();
+				pagination.html(message.b);
+				attachpages.html(message.a);
+				$('[data-toggle="tooltip"]').tooltip();
+				page();
+				return;
+			} else {
+				$.alert('失败');
+			}
+		});
+		return false;
+	});
+}
+//tab
+$(function () {
+    $('#myTab a:first').tab('show');
+    $('#myTab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+    });
+    $("#rewrite-z").find("input").click(function(){
+	  return confirm('是否更改伪静态设置?');
+	});
+	//节省空间，tooltip给图片类型添加尺寸吧
+	 $('[data-toggle="tooltip"]').tooltip();
+	 page();
+})
+
+</script>

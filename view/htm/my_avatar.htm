@@ -1,0 +1,53 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+	<div class="col-lg-6 offset-lg-3">
+		<div class="card card-block m-t-1">
+			<h4 class="card-title"><?php echo lang('modify_avatar');?></h4>
+			<div style="width: 60%; margin: auto;">
+				<p class="text-center">
+					<img id="avatar_img" class="avatar-lg" src="<?php echo $user['avatar_url'];?>">
+				</p>
+				<p class="text-center">
+					<!--
+					<label class="file">
+						<input type="file" id="file">
+						<span class="file-custom"></span>
+					</label>
+					-->
+					<input type="file" id="avatar_upload" accept=".jpg,.jpeg,.png,.gif,.bmp"  class="upload" style="width: 200px; opacity: 0.7" value="<?php echo lang('modify_avatar');?>"/>
+				</p>
+				<progress class="progress progress-success" value="0" max="100" id="avatar_progress">0%</progress>
+			</div>
+		</div>
+		<a role="button" class="btn btn-secondary center-block" href="<?php echo url('my');?>"> <?php echo lang('back');?> </a>
+	</div>
+</div>
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var javatar_upload = $('#avatar_upload');
+var jprogress = $('#avatar_progress');
+var jimg = $('#avatar_img');
+javatar_upload.on('change', function(e) {
+	var files = xn.get_files_from_event(e);
+	jprogress.val(0);
+	xn.upload_file(
+		files[0], 
+		xn.url('my-avatar'), 
+		{width: 128, height: 128, action: 'clip', filetype: 'png'}, 
+		function(code, message) {
+			if(code == 0) {
+				jimg.attr('src', message.url+'?'+Math.random());
+			} else {
+				$.alert(message);
+			}
+		}, 
+		function(percent) {
+			jprogress.val(percent);
+		}
+	);
+});
+
+</script>

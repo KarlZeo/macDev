@@ -1,0 +1,75 @@
+
+<style>
+ul,ol{ list-style: none;margin-left:-40px; }
+.slideShow{position: relative;height: 260px;width: 100%;overflow: hidden;}
+.slideShow ul{position: relative;}
+.slideShow ul li{float: left;width: 100%;height:260px;}
+.slideShow .nav{text-align: center;position: absolute;bottom: 10px;font-size: 18px;line-height: 18px;}
+.slideShow .nav span{-webkit-user-select:none;user-select:none;float: left;cursor: pointer;border-radius: 9px;display: inline-block;width:18px;background: rgba(0,0,0,0,7);margin-left: 2px;color: #fff;opacity:0.5;background-color: #595959;}
+.slideShow .nav span.active{opacity: 1;}
+.slideShow img{width:100%;height:260px;}
+</style>
+<?php
+/*
+	Xiuno BBS 4.0 插件实例：首页右侧，轮播5个最新帖子的最后一张图片。
+	乐客吧www.lek8.com制作 QQ:804772778
+*/
+
+	$arr = db_find_one('attach', array('filetype'=>'image'), array('tid'=>-1));
+	$arr_a = array();
+	if($arr){
+		$tid = $arr['tid']-1;
+		$arr_thread = db_find_one('thread', array('tid'=>$tid), array('fid'=>-1));
+		$subject = "";
+		if($arr_thread){
+			$subject = $arr_thread['subject'];
+		}else{
+			$subject = '未找到标题';
+		}
+		$arr_b = array('tid'=>$tid,'img'=>'http://'.$_SERVER['SERVER_NAME'].'/upload/attach/'.$arr['filename'].'&width=280&height=280','title'=>$subject);
+		array_push($arr_a,$arr_b);
+		if($tid > 0){
+		    $num = 0;
+			do {
+				$arr = db_find_one('attach', array('filetype'=>'image','tid'=>$tid), array('tid'=>-1));
+				if($arr){
+					$num = $num + 1;
+					
+					$arr_thread = db_find_one('thread', array('tid'=>$tid), array('fid'=>-1));
+					if($arr_thread){
+						$subject = $arr_thread['subject'];
+					}else{
+						$subject = '未找到标题';
+					}
+					$arr_b = array('tid'=>$tid,'img'=>'http://'.$_SERVER['SERVER_NAME'].'/upload/attach/'.$arr['filename'].'&width=280&height=280','title'=>$subject);
+					array_push($arr_a,$arr_b);
+				}
+				$tid = $tid - 1;
+			} while ($num < 5 && $tid > 0);	
+		}
+	}
+	//print_r($arr_a);
+?>
+<div class="card slideShow">
+	<ul>
+		<?php if($arr_a && count($arr_a)>0) { foreach ($arr_a as $link) { ?>
+		<li class="m-b-xs text-small">
+			<a href="<?php echo '/?thread-'.$link['tid'].'.htm';?>" title="<?php echo $link['title'];?>">
+			<div style="background:url('/plugin/lek8_img_slide/lib/thumbs.php?filename=<?php echo $link['img'];?>') no-repeat;width:100%;height:100%;">
+			
+				<strong style="background:#595959"><font color="#fff"><?php echo $link['title'];?></font></strong>
+			</div>
+			</a>
+		</li>
+		<?php }} ?>
+	</ul>
+	<div class="nav">
+		<?php if($arr_a && count($arr_a)>0) {
+			for ($i = 1; $i <= count($arr_a); $i++)
+				if($i==1){?>
+					<span class="active"><?php echo $i ;?></span>
+		  <?php }else{ ?>
+					<span><?php echo $i ;?></span>
+		  <?php }} ?>
+	</div>
+</div>

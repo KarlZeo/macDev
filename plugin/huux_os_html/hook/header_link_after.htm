@@ -1,0 +1,7 @@
+<?php $huux_os_html = setting_get('huux_os_html');echo '<!--大白自定义-->'; ?>
+<?php if($huux_os_html['site-css']){
+	echo '<style type="text/css" >';
+    echo $huux_os_html['site-css'];
+	echo '</style>';
+}
+?>

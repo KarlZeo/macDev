@@ -1,0 +1,10 @@
+{
+	"name":"【Gingerbbs】 - 帖子内容隐藏",
+	"brief":"使用[login]文字[/login]，是登录后查看。使用[reply]文字[/reply]是回复查看。",
+	"version":"1.0",
+	"bbs_version":"4.0",
+	"installed":0,
+	"enable":0,
+	"hooks_rank":[],
+	"dependencies":[]
+}

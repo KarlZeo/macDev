@@ -1,0 +1,9 @@
+<script>
+function get_user_log(a){
+	var uid = $(a).parents('tr').attr('uid');
+	var url = '<?php echo url('user_logs-uid-{uid}');?>';
+	url = url.replace('{uid}',uid);
+	window.location.href = url;
+}
+juserlist.find('tr').find('td:last').append(' <a onclick="get_user_log(this);">查看登录日志</a>');
+</script>

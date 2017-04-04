@@ -1,0 +1,10 @@
+{
+    "name": "【Gingerbbs】 - 验证码",
+    "brief": "可在注册,登陆,发帖,回帖处添加验证码认证。",
+    "version": "1.1",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

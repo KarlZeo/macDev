@@ -1,0 +1,49 @@
+
+<?php
+/*
+	Xiuno BBS 4.0 插件实例：首页右侧，展示本周被点击最多的5条主题。
+	乐客吧www.lek8.com制作 QQ:804772778
+*/
+    $cachename = "lek8_hot_theme";//缓存key
+	//cache_delete($cachename);//删除缓存
+    $hotlist = cache_get($cachename);//获取缓存
+	if($hotlist === NULL) {
+		$times_tamp_a = strtotime("-1 week");//上周
+		//$times_tamp_a = mktime(0,0,0,date('m'),date('d')-1,date('Y'));//昨天
+		$hotlist = db_find('thread', array('create_date'=>array('>'=>$times_tamp_a)), array('views'=>-1), 1, 5, 'tid');
+		cache_set($cachename, $hotlist,3600);//设置缓存 和 过期时间，我草，这个单位是 秒 啊
+	}
+?>
+<div class="card  text-middle">
+	<div class="card-header">
+		热门主题：
+	</div>
+	<div class="card-block">
+		<table class="table table-hover threadlist">
+			<tbody>
+				<?php if($hotlist) { foreach($hotlist as $_thread) { ?>
+				<tr>
+					<td class="td-subject p-l-0">
+						<div class="subject">
+							<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
+						</div>
+						<dl class="row small">
+							<dt>
+
+							</dt>
+							<dd class="text-right text-grey">
+								<span class="m-r-1"><i class="icon-eye" aria-hidden="true"></i> <?php echo $_thread['views'];?></span>
+								<span class="hidden-xs-down m-r-1"><i class="icon-comment" aria-hidden="true"></i> <?php echo $_thread['posts'];?></span>
+							</dd>
+						</dl>
+					</td>
+				</tr>
+				<?php }} else { ?>
+				<tr>
+					<td colspan="3"><?php echo lang('none');?></td>
+				</tr>
+				<?php } ?>		
+			</tbody>
+		</table>		
+	</div>
+</div>

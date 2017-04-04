@@ -1,0 +1,20 @@
+						<!--Gingerbbs 回复提醒 开始-->
+						<?php if($user){ ?>
+						<?php $GG_reply = db_find('post',array('GG_reply_user'=>$uid,'GG_reply_read'=>0));?>
+						<?php if($GG_reply){ ?>
+						<li class="nav-item">
+							<div class="dropdown nav-link">
+								<i class="icon icon-bell" id="dropdownMenu1" data-toggle="dropdown" style="cursor:pointer;color:#ea413c;"></i>
+								<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+									<?php foreach($GG_reply as $_GG_reply){ ?>
+									<?php $GG_reply_user = user_read($_GG_reply['uid']);?>
+									<li role="presentation" style="padding:0 3%;">
+										<a role="menuitem" tabindex="-1" href="<?php echo url('thread-'.$_GG_reply['tid']).'#'.$_GG_reply['pid'];?>" style="font-size:0.6rem;color:#fff;" target="_blank"><?php echo $GG_reply_user['username'];?>刚刚回复了您。</a>
+									</li>
+									<?php } ?>
+								</ul>
+							</div>
+						</li>
+						<?php } ?>
+						<?php } ?>
+						<!--Gingerbbs 回复提醒 结束-->

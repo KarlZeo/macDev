@@ -1,0 +1,509 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+<style type="text/css">
+#wrapper{ background: #fff}
+.fr{float: right;}
+.fl{float: left;}
+.card{border: 1px solid rgba(0, 0, 0, 0.125);box-shadow: 0px 0px 10px 0px #e2e2e2; margin-top:0px;}
+.btn-default {color: #333;background-color: #fff;border-color: #ccc;}
+.btn-default:hover {color: #333;background-color: #e6e6e6;border-color: #adadad;}
+.card-header .label,.form-control-label .label {display: inline-block;padding: .25em .4em;font-size: 75%;line-height: 1;color: #fff;white-space: nowrap;vertical-align: baseline;border-radius: .25rem;}
+.card-header .label-success{background-color: #5cb85c;}
+.form-control-label .label-success{ background: #7795C3; cursor: pointer;margin: 0px 2px 2px 0px;}
+/*标题行*/
+.card-title{border-bottom:1px dashed rgb(245, 245, 245); height: 50px;line-height: 30px;}
+.card-title i,.nav-item i{display: inline-block; margin-right: 5px;}
+/*TAB行*/
+#myTab li{ padding: 0; }
+#myTab li.nav-item.pull-right{ float: right; }
+#myTab a{ display: inline-block;text-decoration: none; padding: 0.5rem 1rem 0.5rem 1rem }
+#myTab a:hover{color:#000; background: #F9F9F9}
+#myTab a.active{ background-color:#fff; }
+/*TAB内容*/
+.tab-content{ margin-bottom: 10px;border-bottom-right-radius:5px;border-bottom-left-radius:5px;}
+/*form内容*/
+.form-group { padding: 0.5rem 1rem;border-bottom: 1px dashed rgba(226, 226, 226, 0.46);margin-bottom: 0;}
+.form-group b{ font-weight: normal; }
+.form-group p,.form-group label{ margin-bottom: 0; }
+.form-group p em{ font-style: normal; padding: 0 1rem }
+.form-group label{font-size:0.85rem;}
+.form-group .form-control-label b{font-size: 12px;padding:0px 4px; border:solid 1px #e2e2e2;display:inline-block;color:#333;background: #f2f2f2;border-radius: 2px; font-weight: normal;font-family:'courier new', sans-serif; margin: 0px 2px 2px 0px;}
+.form-group .form-control-label b.z-js{background: #f0ad4e;color:#fff;border:none;}
+.form-group .form-control-label b.z-jq{background: #6AB3DE;color:#fff;border:none;}
+.form-group .form-control-label b.info_btn{ cursor: pointer; }
+.form-group .form-control{box-shadow:0px 1px 5px 0px #e2e2e2 inset;font-size: 12px;font-family:courier new, sans-serif; }
+.form-group .form-control:focus { box-shadow:0px 1px 5px 0px #E2F1FF inset;border-color: #9BC9EF;}
+/*form内容-css jss*样式*/
+.form-group .site-js{ background: #000 ;}
+.form-group .site-css .form-control{padding: 20px 10px;border-radius: 0;border:1px solid #03A9F4}
+.form-group .site-css .form-control:focus { box-shadow:0px 0px 3px 0px #4CBEF1 inset;background: #FAFDFF;}
+.form-group .site-js .form-control{padding: 5px 10px;box-shadow:none;background: transparent;border-color: transparent;border-radius:0;color:#5ce638;font-size: 12px;font-family:courier new, sans-serif;}
+.form-group .site-js .form-control:focus {box-shadow:none;border-color: transparent;color: #5ce638;}
+.form-group .bx-e{ padding: 0;border-radius: 0.3rem; overflow: hidden;}
+.form-group .site-css p{color: #FFFFFF;background: #03A9F4;margin: 0;padding: 5px 10px 5px;}
+.form-group .site-js p{ color: #FF0B7A; background:#353535;margin: 0;padding: 5px 10px 5px;}
+/*info-overflow-auto*/
+.info-overflow-auto{ max-height: 300px; overflow: auto;border: 1px solid #e2e2e2;padding: 0.5rem; background: #f5f5f5 }
+</style>
+<div class="row">
+	<div class="col-lg-12">
+
+		<div class="card">
+			<div class="card-header"> 
+					<div class="row">
+						<div class="col-lg-4"><p class="m-y-xs text-muted fl"><i class="icon-cog m-r-sm"></i>大白自定义HTML+CSS+JS<span class="m-l-xs label label-success">v1.6</span></p></div>
+						<div class="col-lg-8 text-right ">
+						<a class="btn btn-default text-muted m-y-xs m-r-xs btn-sm" target="_blank" href="http://xiuno.huux.com" role="button"><i class="icon-chevron-circle-right m-r-xs"></i>插件官网</a>
+						<a class="btn btn-default text-muted m-y-xs m-r-xs btn-sm" href="<?php echo url("plugin-setting-huux_os_html");?>" role="button"><i class="icon-refresh"></i></a>
+						<a class="btn btn-default text-muted m-y-xs m-r-xs btn-sm" href="<?php echo url("plugin");?>" role="button"><i class="icon-times"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- card-block start -->
+			<div class="card-block">
+			    <form action="<?php echo url("plugin-setting-huux_os_html");?>" method="post" id="form">
+				<!-- tab -->
+				 <ul class="nav nav-tabs" role="tablist" id="myTab">
+				  <li class="nav-item active"><a href="#index-z"  class="nav-link">首页</a></li>
+				  <li class="nav-item"><a href="#forum-z" class="nav-link">板块页</a></li>
+				  <li class="nav-item"><a href="#thread-z" class="nav-link">主题页</a></li>
+				  <li class="nav-item"><a href="#post-z" class="nav-link">发表主题页</a></li>
+				  <li class="nav-item"><a href="#site-z" class="nav-link">所有页</a></li>
+				  <li class="nav-item"><a href="#css-z" class="nav-link">自定义CSS</a></li>
+				  <li class="nav-item"><a href="#js-z" class="nav-link">自定义JS</a></li>
+				  <li class="nav-item pull-right"><a href="#info-z" class="nav-link" id="info_click"><i class="icon-info-circle"></i>使用参考</a></li>
+				</ul>
+
+				<div class="tab-content card-block">
+				  <div class="tab-pane active" id="index-z">
+					    <div class="form-group row">
+							<label class="col-sm-2 form-control-label">左侧顶部：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['index-html-1']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">右侧边栏发帖按钮下：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['index-html-2']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">右侧边栏底部：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['index-html-3']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label text-grey">首页底部隐藏区：<br/><b>自定义HTML</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['index-hidden']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：在页面最下面，此处内容不显示，可用于放外联文件，或自定义JS/CSS代码<br/>例如：<br/>&lt;link rel="stylesheet" href="http://www.huux.com/style.css"&gt;<br/>&lt;script src="http://www.huux.com/jquery.js"&gt;&lt;/script&gt;</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">首页自定义JS：<br/><b class="z-js">JavaScript</b><b class="z-jq">jQuery</b></label>
+							<div class="col-sm-10 site-js bx-e">
+							<p class="small">&lt;script type='text/javascript'&gt;</b></p>
+								<?php echo $input['site-js-1']; ?>
+							<p class="small">&lt;/script&gt;</p>
+						    </div>
+						    <label class="col-sm-2"></label>
+						    <div class="col-sm-10">
+							<p class="m-t-sm text-danger small ">注：请填写规范的JavaScript 或 jQuery代码,填写错误的代码可能会导致意想不到的效果。<b class="text-info">（此处填写的代码仅在 首页 生效）</b></p>
+							</div>
+						</div>
+				  </div>
+				  <!-- 板块页 -->
+				  <div class="tab-pane" id="forum-z">
+					    <div class="form-group row">
+							<label class="col-sm-2 form-control-label">左侧面包屑导航上：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['forum-html-1']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">左侧面包屑导航下：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['forum-html-2']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">右侧边栏底部：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['forum-html-3']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label text-grey">板块页底部隐藏区：<br/><b>自定义HTML</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['forum-hidden']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：在页面最下面，此处内容不显示，可用于放外联文件，或自定义JS/CSS代码<br/>例如：<br/>&lt;link rel="stylesheet" href="http://www.huux.com/style.css"&gt;<br/>&lt;script src="http://www.huux.com/jquery.js"&gt;&lt;/script&gt;</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">板块页自定义JS：<br/><b class="z-js">JavaScript</b><b class="z-jq">jQuery</b></label>
+							<div class="col-sm-10 site-js bx-e">
+							<p class="small">&lt;script type='text/javascript'&gt;</b></p>
+								<?php echo $input['site-js-2']; ?>
+							<p class="small">&lt;/script&gt;</p>
+						    </div>
+						    <label class="col-sm-2"></label>
+						    <div class="col-sm-10">
+							<p class="m-t-sm text-danger small ">注：请填写规范的JavaScript 或 jQuery代码,填写错误的代码可能会导致意想不到的效果。<b class="text-info">（此处填写的代码仅在 板块页 生效）</b></p>
+							</div>
+						</div>
+				  </div>
+				  <!-- 主题页 -->
+				  <div class="tab-pane" id="thread-z"> 
+				        <div class="form-group row">
+							<label class="col-sm-2 form-control-label">左侧面包屑导航上：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['thread-html-1']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">左侧面包屑导航下：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['thread-html-2']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">左侧最新回复上：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['thread-html-3']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">右侧底部：<br/><b>自定义HTML</b><span class="z-info-col label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['thread-html-4']; ?>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label text-grey">主题页底部隐藏区：<br/><b>自定义HTML</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['thread-hidden']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：在页面最下面，此处内容不显示，可用于放外联文件，或自定义JS/CSS代码<br/>例如：<br/>&lt;link rel="stylesheet" href="http://www.huux.com/style.css"&gt;<br/>&lt;script src="http://www.huux.com/jquery.js"&gt;&lt;/script&gt;</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">主题页自定义JS：<br/><b class="z-js">JavaScript</b><b class="z-jq">jQuery</b></label>
+							<div class="col-sm-10 site-js bx-e">
+							<p class="small">&lt;script type='text/javascript'&gt;</b></p>
+								<?php echo $input['site-js-3']; ?>
+							<p class="small">&lt;/script&gt;</p>
+						    </div>
+						    <label class="col-sm-2"></label>
+						    <div class="col-sm-10">
+							<p class="m-t-sm text-danger small ">注：请填写规范的JavaScript 或 jQuery代码,填写错误的代码可能会导致意想不到的效果。<b class="text-info">（此处填写的代码仅在 主题页 生效）</b></p>
+							</div>
+						</div>
+					</div>
+					<!-- 发表主题页 -->
+				  <div class="tab-pane" id="post-z"> 
+				        <div class="form-group row">
+							<label class="col-sm-2 form-control-label">内容顶部：<br/><b>自定义HTML</b><span class="z-info label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['post-html-1']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：不在布局container内，即站点头部下面。</p>
+						    </div>
+						    
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">添加附件下：<br/><b>自定义HTML</b><span class="z-info-con label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['post-html-2']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：添加附件和发表主题行的下一行。</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">内容底部：<br/><b>自定义HTML</b><span class="z-info label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['post-html-3']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：不在布局container内，即站点底部上面。</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">发表主题页自定义JS：<br/><b class="z-js">JavaScript</b><b class="z-jq">jQuery</b></label>
+							<div class="col-sm-10 site-js bx-e">
+							<p class="small">&lt;script type='text/javascript'&gt;</b></p>
+								<?php echo $input['site-js-4']; ?>
+							<p class="small">&lt;/script&gt;</p>
+						    </div>
+						    <label class="col-sm-2"></label>
+						    <div class="col-sm-10">
+							<p class="m-t-sm text-danger small ">注：请填写规范的JavaScript 或 jQuery代码,填写错误的代码可能会导致意想不到的效果。<b class="text-info">（此处填写的代码仅在 发表主题页 生效）</b></p>
+							<p class="m-b-sm text-warning small">例如：</p>
+								<p class="m-b-sm text-grey small">
+								$('#addattach').remove();//不显示添加附件按钮<br/>
+								$('#submit').remove();//不显示发帖按钮
+								</p>
+							</div>
+						</div>
+					</div>
+					<!-- 全局自定义css -->
+					<div class="tab-pane" id="css-z"> 
+					    <div class="form-group row">
+							<label class="col-sm-2 form-control-label">全局自定义CSS：<br/><span class="z-info-css label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10 site-css bx-e">
+							    <p class="small">&lt;style type="text/css"&gt;</b></p>
+								<?php echo $input['site-css']; ?>
+								<p class="small">&lt;/style&gt;</p>
+							</div>
+							<label class="col-sm-2"></label>
+						    <div class="col-sm-10">
+								<p class="text-grey small">提示：此处内容是放在&lt;head&gt;&lt;/head&gt;内的最下面。</p>
+								<p class="m-t-sm text-danger small">注：请填写规范的CSS层叠样式代码<b class="text-info">（此处填写的代码在所有页面生效）在站点head内</b></p>
+								<p class="m-b-sm text-warning small">例如：</p>
+								<p class="m-b-sm text-grey small">
+								body{background:#333}   /*设置网站背景色：黑色*/<br/>
+								#header.bg-inverse{background: rgb(8, 89, 158) !important;}    /*设置头部导航背景：蓝色*/<br/>
+								#nav_pc li:nth-child(1){display:none}     /*隐藏掉头部导航处网站LOGO小图片*/</p>
+						    </div>
+						</div>
+					</div>
+					<!-- 全局自定义js -->
+					<div class="tab-pane" id="js-z"> 
+					    <div class="form-group row">
+							<label class="col-sm-2 form-control-label">全局自定义JS：<br/><b class="z-js">JavaScript</b><b class="z-jq">jQuery</b></label>
+							<div class="col-sm-10 site-js bx-e">
+							<p class="small">&lt;script type='text/javascript'&gt;</b></p>
+								<?php echo $input['site-js']; ?>
+							<p class="small">&lt;/script&gt;</p>
+						    </div>
+						    <label class="col-sm-2"></label>
+						    <div class="col-sm-10">
+							<p class="m-t-sm text-danger small ">注：请填写规范的JavaScript 或 jQuery代码,填写错误的代码可能会导致意想不到的效果。<b class="text-info">（此处填写的代码在所有页面生效）</b></p>
+							<p class="m-b-sm text-warning small">例如：</p>
+								<p class="m-b-sm text-grey small">
+								$('#nav_pc li[fid="2"]').remove();//头部导航里面移除fid为2的论坛板块<br/>
+								$('#nav_pc li').eq(1).remove();//头部导航里面移除第2个<br/></p>
+							</div>
+						</div>
+
+					</div>
+					<!-- 所有页 -->
+				    <div class="tab-pane" id="site-z">
+				        <div class="form-group row">
+							<label class="col-sm-2 form-control-label">站点head内：<br/><b>自定义HTML</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['site-hidden']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：在&lt;head&gt;&lt;/head&gt;内，可用于放外联文件，或自定义JS/CSS代码，也是【自定义CSS】的上方<br/>例如：<br/>&lt;link rel="stylesheet" href="http://www.huux.com/style.css"&gt;<br/>&lt;script src="http://www.huux.com/jquery.js"&gt;&lt;/script&gt;</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">body内最上面：<br/><b>自定义HTML</b><span class="z-info label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span><b class="z-js info_btn">位置详见使用参考</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['header_body_start']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：布局<em class="text-danger">body</em>内最上面，和#wrapper是兄弟，但在#wrapper上面。</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">站点顶部：<br/><b>自定义HTML</b><span class="z-info label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span><b class="z-js info_btn">位置详见使用参考</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['header_wrapper_start']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：布局<em class="text-danger">#wrapper</em>内最顶部，即站点头部导航上面。</p>
+						    </div>
+						</div>
+					    <div class="form-group row">
+							<label class="col-sm-2 form-control-label">主体内容顶部：<br/><b>自定义HTML</b><span class="z-info-con label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span><b class="z-js info_btn">位置详见使用参考</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['site-html-h']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：布局<em class="text-danger">#body(container)</em>内最顶部，也是站点头部导航下面。</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">主体内容底部：<br/><b>自定义HTML</b><span class="z-info-con label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span><b class="z-js info_btn">位置详见使用参考</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['site-html-f']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：布局<em class="text-danger">#body(container)</em>内最底部，也是站点底部页脚上面。</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">底部页脚上：<br/><b>自定义HTML</b><span class="z-info label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span><b class="z-js info_btn">位置详见使用参考</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['footer_nav_before']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：布局<em class="text-danger">#footer</em>上，即站点底部页脚通栏上面。</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">底部页脚下：<br/><b>自定义HTML</b><span class="z-info label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['footer_nav_after']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：布局<em class="text-danger">#footer</em>下，即站点底部页脚通栏下面。</p>
+						    </div>
+						</div> 
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">页脚版权左侧：<br/><b>自定义HTML</b><span class="z-info-bql label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['footer_footer_left_start']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：页脚Powered by Xiuno BBS 4.0左侧。</p>
+								<p class="text-warning small">例如：</p>
+								<p class="m-b-sm text-grey small">&lt;span class="m-r-xs"&gt;&lt;a href="#" class="text-muted text-bold"&gt;京ICP备10046888号&lt;/a&gt;&lt;/span&gt;
+								</p> 
+						    </div> 
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label">页脚版权右侧：<br/><b>自定义HTML</b><span class="z-info-bqr label label-success"><i class="m-r-xs icon-download"></i>载入示例代码</span></label>
+							<div class="col-sm-10">
+								<?php echo $input['footer_footer_left_end']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：页脚Powered by Xiuno BBS 4.0右侧。</p>
+								<p class="text-warning small">例如：</p>
+								<p class="m-b-sm text-grey small">&lt;span class="text-bold m-l-xs"&gt;本站官方QQ群：88881111&lt;/span&gt;
+								</p>
+						    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 form-control-label text-grey">站点底部隐藏区：<br/><b>自定义HTML</b></label>
+							<div class="col-sm-10">
+								<?php echo $input['site-hidden']; ?>
+								<p class="m-b-sm m-t-sm text-grey small">说明：在页面最下面，此处内容不显示，可用于放外联文件，或自定义JS/CSS代码<br/>例如：<br/>&lt;link rel="stylesheet" href="http://www.huux.com/style.css"&gt;<br/>&lt;script src="http://www.huux.com/jquery.js"&gt;&lt;/script&gt;</p>
+						    </div>
+						</div>
+				    </div>
+				    <!-- 使用参考 -->
+				    <div class="tab-pane" id="info-z">
+				        <div class="form-group row">
+							<label class="col-sm-3 form-control-label" >自定义布局代码参考：<br/><b class="z-jq">bootstrap</b></label>
+							<div class="col-sm-9">
+								<div class="row">
+									<div class="col-sm-5"><p class="m-b-sm text-warning small">（默认分栏案例）例如：</p>
+									<p class="m-b-sm text-muted small">&lt;div class="row"&gt;<br>&nbsp;&nbsp;&lt;div class="col-lg-9"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;     &lt;div class="breadcrumb"&gt;这是左右分栏--左侧&lt;/div&gt;<br>&nbsp;&nbsp;   &lt;/div&gt;<br>&nbsp;&nbsp;   &lt;div class="col-lg-3 hidden-md-down"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;      &lt;div class="breadcrumb"&gt;这是左右分栏--右侧&lt;/div&gt;<br>&nbsp;&nbsp;    &lt;/div&gt;<br>&lt;/div&gt;</p></div>
+									<div class="col-sm-5"><p class="m-b-sm text-warning small">（通栏案例）例如：</p>
+									<p class="m-b-sm text-muted small">&lt;div class="row"&gt;<br>&nbsp;&nbsp;&lt;div class="col-lg-12"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="breadcrumb"&gt;这是通栏&lt;/div&gt;<br>&nbsp;&nbsp;&lt;/div&gt;<br>&lt;/div&gt;</p></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 form-control-label" >xiuno4.0默认模板布局说明：<br/><b class="z-js">位置参考</b></label>
+							<div class="col-sm-9">
+								<div class="row">
+									<div class="col-sm-12"><p class="m-b-sm text-warning small">#wrapper外层包装（#header 头部，#body(container)主体内容，#footer底部页脚）</p>
+									<p class="m-b-sm text-muted small info-overflow-auto">&lt;html&gt;<br />&lt;head&gt;&lt;/head&gt;<br />&lt;body&gt;<br />&lt;div id="wrapper"&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;nav id="header"&gt;&lt;/nav&gt;   &lt;!-- 头部导航--&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="body" class="container"&gt;&lt;/div&gt;   &lt;!-- 主体内容--&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="footer"&gt;&lt;/div&gt;   &lt;!-- 底部页脚--&gt;<br />&lt;/div&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;
+									</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 form-control-label" >几种颜色类参考：<br/></label>
+							<div class="col-sm-9">
+								<div class="row">
+									<div class="col-sm-5"><p class="m-b-sm text-warning small">（情境文本颜色）例如：</p>
+									<p class="m-b-sm text-muted small info-overflow-auto">&lt;p class="text-muted"&gt;...&lt;/p&gt;<br />&lt;p class="text-primary"&gt;...&lt;/p&gt;<br />&lt;p class="text-success"&gt;...&lt;/p&gt;<br />&lt;p class="text-info"&gt;...&lt;/p&gt;<br />&lt;p class="text-warning"&gt;...&lt;/p&gt;<br />&lt;p class="text-danger"&gt;...&lt;/p&gt;</p></div>
+									<div class="col-sm-5"><p class="m-b-sm text-warning small ">（情境背景色）例如：</p>
+									<p class="m-b-sm text-muted small info-overflow-auto">&lt;p class="bg-primary"&gt;...&lt;/p&gt;<br />&lt;p class="bg-success"&gt;...&lt;/p&gt;<br />&lt;p class="bg-info"&gt;...&lt;/p&gt;<br />&lt;p class="bg-warning"&gt;...&lt;/p&gt;<br />&lt;p class="bg-danger"&gt;...&lt;/p&gt;</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 form-control-label" >CSS类参考：<br/></label>
+							<div class="col-sm-9">
+								<div class="row">
+									<div class="col-sm-12"><p class="m-b-sm text-warning small">bootstrap：</p>
+									<p class="m-b-sm text-muted small info-overflow-auto">/* bootstrap 的默认间距太肥大，增加小间距 */<br />.m-b-sm { margin-bottom: 0.5rem !important } <br />.m-t-sm { margin-top: 0.5rem !important } <br />.m-l-sm { margin-left: 0.5rem !important } <br />.m-r-sm { margin-right: 0.5rem !important } <br />.m-x-sm { margin-left: 0.5rem !important; margin-right: 0.5rem !important } <br />.m-y-sm { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important } <br />.p-b-sm { padding-bottom: 0.5rem !important } <br />.p-t-sm { padding-top: 0.5rem !important } <br />.p-l-sm { padding-left: 0.5rem !important } <br />.p-r-sm { padding-right: 0.5rem !important } <br />.p-x-sm { padding-left: 0.5rem !important; padding-right: 0.5rem !important } <br />.p-y-sm { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important } <br />.p-a-sm { padding: 0.5rem !important;;}<br />.m-b-xs { margin-bottom: 0.3rem !important } <br />.m-t-xs { margin-top: 0.3rem !important } <br />.m-l-xs { margin-left: 0.3rem !important } <br />.m-r-xs { margin-right: 0.3rem !important } <br />.m-x-xs { margin-left: 0.3rem !important; margin-right: 0.3rem !important } <br />.m-y-xs { margin-top: 0.3rem !important; margin-bottom: 0.3rem !important } <br />.p-b-xs { padding-bottom: 0.3rem !important } <br />.p-t-xs { padding-top: 0.3rem !important } <br />.p-l-xs { padding-left: 0.3rem !important } <br />.p-r-xs { padding-right: 0.3rem !important } <br />.p-x-xs { padding-left: 0.3rem !important; padding-right: 0.3rem !important } <br />.p-y-xs { padding-top: 0.3rem !important; padding-bottom: 0.3rem !important } <br />.p-a-xs { padding: 0.3rem !important; }<br /><br />/* 文字相关的增强 */<br />.icon-1x { font-size: 0.8em; }<br />.text-ellipsis {white-space: nowrap; text-overflow: ellipsis; -o-text-overflow: ellipsis; overflow: hidden; }<br />.text-right { text-align: right  !important; }<br />.text-center { text-align: center !important; }<br />.text-left { text-align: left  !important; }<br />.text-bold { font-weight: bold !important; }<br />.text-grey { color: ($gray-light * 1.375)  !important; }<br />.text-middle { font-size: 85% !important; }<br />.small, .text-small { font-size: 75% !important; }<br />.table-fixed { table-layout:fixed !important; }<br />.break-all {word-break: break-all;}<br />.hidden {display: none;}<br />.show {display: '';}<br />.center-block {margin-left: auto; margin-right: auto; display: block;}
+									</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+					<!-- 使用参考 end-->
+				    </div>
+				    <!-- tab end-->
+					<div class="row">
+							<label class="col-sm-2 form-control-label"></label>
+							<div class="col-sm-2 m-b-sm">
+								<button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+							</div>
+							<div class="col-sm-2 m-b-sm">
+								<a role="button" class="btn btn-secondary btn-block" href="javascript:history.back();"><?php echo lang('back');?></a>
+							</div>
+					</div>
+				</form>
+			</div>
+			<!-- card-block end -->
+			<div class="card-footer text-right"><p class="m-y-xs text-muted  text-small"><i class="icon-qq m-r-sm"></i>XiunoBBS交流群：474834730</p></div>
+		</div>
+	</div>
+</div>
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+
+var jform = $("#form");
+var jsubmit = $("#submit");
+var referer = '<?php echo http_referer();?>';
+jform.on('submit', function(){
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message);
+			//jsubmit.text(message).delay(100).button('reset').location(referer);
+			jsubmit.text(message).delay(100).button('reset');
+			return;
+		} else {
+			$.alert(message);
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+//container内
+$(".form-control-label").find('.z-info-con').click(function(){
+	var chtml = '<div class="row"><div class="col-lg-12"><div class="breadcrumb m-b-sm">这是通栏</div></div></div>';
+    var textareacc = $(this).parent().next('div').find('textarea');
+    textareacc.val(textareacc.val()+chtml);
+
+});
+//container外
+$(".form-control-label").find('.z-info').click(function(){
+	var chtml = '<div class="container"><div class="row"><div class="col-lg-12"><div class="breadcrumb m-b-sm">这是通栏</div></div></div></div>';
+    var textareacc = $(this).parent().next('div').find('textarea');
+    textareacc.val(textareacc.val()+chtml);
+});
+//col布局内
+$(".form-control-label").find('.z-info-col').click(function(){
+	var chtml = '<div class="breadcrumb m-b-sm">这是参考代码</div>';
+    var textareacc = $(this).parent().next('div').find('textarea');
+    textareacc.val(textareacc.val()+chtml);
+});
+//页脚版权左
+$(".form-control-label").find('.z-info-bql').click(function(){
+	var chtml = '<span class="m-r-xs"><a href="#" class="text-muted text-bold">京ICP备10000000号</a></span>';
+    var textareacc = $(this).parent().next('div').find('textarea');
+    textareacc.val(textareacc.val()+chtml);
+});
+//页脚版权右
+$(".form-control-label").find('.z-info-bqr').click(function(){
+	var chtml = '<span class="text-bold m-l-xs">本站官方QQ群：88881111</span>';
+    var textareacc = $(this).parent().next('div').find('textarea');
+    textareacc.val(textareacc.val()+chtml);
+});
+//页脚版权右
+$(".form-control-label").find('.z-info-css').click(function(){
+	var chtml = '#header.bg-inverse{background:#fff !important;box-shadow: 0 1px 1px rgba(0,0,0,0.05);} #header .nav-link {color:#333;}';
+    var textareacc = $(this).parent().next('div').find('textarea');
+    textareacc.val(textareacc.val()+chtml);
+});
+
+//tab
+$(function () {
+    $('#myTab a:first').tab('show');
+    $('#myTab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+    });
+    $('.info_btn').click(function(){
+    	$('#info_click').click();
+    })
+
+})
+
+</script>

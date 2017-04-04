@@ -1,0 +1,139 @@
+<?php if($threadlist) { foreach($threadlist as $_thread) { ?>
+<li class="thread <?php echo $_thread['top_class'];?>" tid="<?php echo $_thread['tid'];?>">
+	<div class="DiscussionListItem">
+		<?php if(forum_access_mod($_thread['fid'], $gid, 'allowtop')) { ?>
+		<div class="DiscussionListItem-controls itemCount1">
+			<input type="checkbox" name="modtid" value="<?php echo $_thread['tid']; ?>">
+		</div>
+		<?php } ?>
+		<div class="DiscussionListItem-content Slidable-content subject">
+			<a href="<?php echo url("user-$_thread[uid]");?>" class="DiscussionListItem-author" title="">
+				<img class="Avatar lazy" data-original="<?php echo $_thread['user_avatar_url'];?>">
+			</a>
+
+			<?php if($_thread['top'] || $_thread['closed']) { ?>
+			<ul class="DiscussionListItem-badges badges">
+				<?php if($_thread['closed'] == 1) { ?>
+				<li class="item-locked">
+					<span class="Badge Badge--locked" title="帖子已关闭">
+						<i class="icon fa fa-fw fa-lock Badge-icon">
+						</i>
+					</span>
+				</li><?php } ?><?php if($_thread['top'] ==3) { ?><li class="item-sticky">
+					<span class="Badge Badge--sticky" title="全站置顶">
+						<i class="icon fa fa-fw fa-thumb-tack Badge-icon">
+						</i>
+					</span>
+				</li><?php } ?><?php if($_thread['top'] ==1) { ?><li class="item-sticky">
+					<span class="Badge Badge--sticky--1" title="版块置顶">
+						<i class="icon fa fa-fw fa-map-marker Badge-icon">
+						</i>
+					</span>
+				</li>
+				<?php } ?>
+			</ul>
+			<?php } ?>
+
+			<a class="DiscussionListItem-main" href="<?php echo url("thread-$_thread[tid]");?>">
+				<h3 class="DiscussionListItem-title">
+					<?php echo $_thread['subject'];?>
+				</h3>
+			<?php if($_thread['digest'] > 0) { ?>
+				<i class="fa fa-fw fa-diamond f15 text-muted"></i>
+			<?php } ?>
+			<?php if($_thread['files'] > 0) { ?>
+				<i class="fa fa-fw fa-paperclip f15 text-muted"></i>
+			<?php } ?>
+				<ul class="DiscussionListItem-info">
+<?php
+	// //判断类型，返回缩略图地址
+	// function get_img_thumbname($text) {
+	// 	$dst_img = strtolower(substr($text,strrpos($text,"/")+1,strrpos($text,".")+3));
+	// 	$dst_img = '/plugin/sx_tieba/avatar/thumb_'.$dst_img;
+	// 	return $dst_img;
+	// }
+?>
+<?php
+	$kv = kv_get('SX_tieba_conf');
+	$show_enable=$kv['show_enable']?1:0;
+?>
+<?php 
+	$post = post_read($_thread['firstpid']);
+	$content =($post['message']);
+	$message = strip_tags($content);
+	$pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png]))[\'|\"].*?[\/]?>/";
+	$imgcount=preg_match_all($pattern,$content,$match);
+	$imgs=array();
+	for ($i=0; $i<3; $i++) {
+		if(!empty($match[0][$i])){
+			if($show_enable){
+				$tempaddr=$match[1][$i];
+				$img_thumb = strtolower(substr($tempaddr,strrpos($tempaddr,"/")+1,strrpos($tempaddr,".")+3));
+				$img_thumb = '/bbs/plugin/sx_tieba/avatar/thumb_'.$img_thumb;
+				//$img_thumb=get_img_thumbname($match[1][$i]);
+				if(is_file(APP_PATH.''.$img_thumb)) {
+					$imgs[$i]=$img_thumb;
+				}else {
+					$imgs[$i]='/bbs/plugin/sx_tieba/lib/thumbs.php?filename='. APP_PATH .$match[1][$i].'&ish=100';
+				}
+			}else {
+				$imgs[$i]=$match[1][$i];
+			}
+		}
+	}
+?>
+<?php 
+	$imgcount=$kv['show_upimgonly']?$_thread['images']:$imgcount;
+	if($imgcount > 0) { ?>
+	<ul class="item-pic clearfix">
+		<?php foreach($imgs as $pic){?>
+			<li class="fleft"><img class="lazy" height="100" alt="<?php echo $_thread['subject']; ?>" data-original="<?php echo $pic ?>"></li>
+		<?php }?>
+		<?php if($imgcount > 3) { ?>
+			<span>共&nbsp;<?php echo $imgcount;?>&nbsp;张</span>
+		<?php }?>
+	</ul>
+<?php } ?>
+					<li class="item-tags">
+						<?php if(!$fid) { ?>
+						<span class="TagsLabel nav-<?php echo $_thread['fid']; ?>">
+							<span class="TagLabel colored">
+								<span class="TagLabel-text">
+									<?php echo $_thread['forumname'];?>
+								</span>
+							</span><?php if(!empty($_thread['taglist'])) { foreach($_thread['taglist'] as $tag) { ?><span class="TagLabel colored tag-id"><?php echo $tag['name'];?></span>
+							<?php  }} ?>
+						</span>
+						<?php } ?>
+					</li>
+					<li class="item-terminalPost">
+						<span>
+							<?php if($_thread['posts'] == 0) { ?>
+							<span class="username">
+								<?php echo $_thread['username'];?>
+							</span>
+							<span class="time">
+								<?php echo $_thread['create_date_fmt'];?>
+							</span>
+							<?php } else { ?>
+							<i class="icon fa fa-fw fa-reply ">
+							</i>
+							<span class="username">
+								<?php echo $_thread['lastusername'];?>
+							</span>
+							<span class="time">
+								<?php echo $_thread['last_date_fmt']; ?>
+							</span>
+							<?php } ?>
+						</span>
+					</li>
+				</ul>
+			</a>
+			<span class="DiscussionListItem-count" title="">
+				<?php echo $_thread['posts'];?>
+			</span>
+		</div>
+	</div>
+</li>
+<?php }} ?>
+<!-- {hook thread_list_inc_start.htm} -->

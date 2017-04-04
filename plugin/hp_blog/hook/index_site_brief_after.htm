@@ -1,0 +1,34 @@
+<?php
+$cachename = "hoping_hot_threads";//缓存key
+//cache_delete($cachename);//删除缓存
+$hotlist = cache_get($cachename);//获取缓存
+if($hotlist === NULL) {
+	$times_tamp_a = strtotime("-1 week");//上周
+	//$times_tamp_a = mktime(0,0,0,date('m'),date('d')-1,date('Y'));//昨天
+	$hotlist = db_find('thread', array('create_date'=>array('>'=>$times_tamp_a)), array('views'=>-1), 1, 5, 'tid');
+}
+if($hotlist) {
+?>
+<div class="card card-block">
+    <h6 class="card-title">热门文章</h6>
+	<ul class="list-unstyled">
+<?php
+	foreach($hotlist as $_thread) {
+?>
+        <li class="text-truncate">
+			<a <?php if(!isset($_thread['cover'])) { ?>class="nopic" <?php } ?> href="<?php echo url("thread-$_thread[tid]");?>" title="<?php echo $_thread['subject'];?>">
+                <?php if(isset($_thread['cover'])) { ?>
+				<span class="thumbnail">
+                    <img class="thumb" src="<?php echo $_thread['cover'];?>" style="display: block;">
+                </span>
+                <?php } ?>
+				<span class="text"><?php echo $_thread['subject'];?></span>
+				<span class="muted">查看(<?php echo $_thread['views'];?>)</span>
+				<span class="muted">评论(<?php echo $_thread['posts'];?>)</span></a>
+		</li>
+<?php } ?>
+	</ul>
+</div>
+<?php }
+cache_set($cachename, $hotlist, 3600);
+?>

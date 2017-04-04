@@ -1,0 +1,10 @@
+{
+    "name": "只看楼主",
+    "brief": "只看楼主的回贴",
+    "version": "1.0",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

@@ -1,0 +1,1 @@
+		$is_use = db_update('sg_invite',array('inv'=>$invite),array('stime'=>time(),'user'=>$username));

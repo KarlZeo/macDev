@@ -1,0 +1,23 @@
+<?php
+	$_threadlist = mythread_find_by_uid($thread['uid'], 1, 10);
+				
+	// 过滤没有权限访问的主题 / filter no permission thread
+	thread_list_access_filter($_threadlist, $gid);
+
+?>
+<div class="card post p-a-sm">
+    <dl class="row">
+        <dt>
+            <b>相关推荐</b>
+        </dt>
+    </dl>
+    <ul>
+		<?php foreach($_threadlist as $_thread) { ?>
+        <li>
+			<a href="<?php echo url("thread-$_thread[tid]");?>">
+				<?php echo $_thread['subject'];?>
+			</a>
+		</li>
+		<?php } ?>
+    </ul>
+</div>		

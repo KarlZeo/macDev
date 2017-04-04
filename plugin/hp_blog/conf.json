@@ -1,0 +1,10 @@
+{
+    "name": "Xiuno BLOG模板",
+    "brief": "博客模板，作者：IT果农",
+    "version": "1.0",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

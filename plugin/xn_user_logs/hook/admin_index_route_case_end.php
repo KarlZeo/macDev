@@ -1,0 +1,1 @@
+case 'user_logs':		include _include(APP_PATH.'plugin/xn_user_logs/route/user_logs.php'); 	break;

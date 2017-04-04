@@ -1,0 +1,12 @@
+<?php
+$only_host = param('onlyhost', 0);
+if($only_host){
+?>
+<a href="<?php echo url('thread-'.$tid);?>">查看全部</a>
+<?php
+} else {
+?>
+<a href="<?php echo url('thread-'.$tid, array('onlyhost'=>1));?>">只看楼主</a>
+<?php
+}
+?>
